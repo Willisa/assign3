@@ -12,7 +12,7 @@ final int EMPTY     = 0;
 //enemy control
 final int Straight  = 1;
 final int Slope     = 2;
-int i=0, j=0; 
+final int Diamond   = 3; 
 
 PImage enemy ;
 PImage fighter ;
@@ -32,7 +32,7 @@ float treasureX, treasureY;
 float fighterX, fighterY;
 float fighterSpeed;
 float hpX;
-float enemySpacing; 
+float enemySpacing = 65; 
 
 int width, height;
 int x1, x2;
@@ -62,8 +62,6 @@ void setup () {
   treasure = loadImage("img/treasure.png");
   end1 = loadImage("img/end1.png");
   end2 = loadImage("img/end2.png");
-  enemy1 = loadImage("img/Moocs-element-enemy1.png");
-  gainbomb = loadImage("img/Moocs-element-gainbomb.png");
   start1 = loadImage("img/start1.png");
   start2 = loadImage("img/start2.png");
   
@@ -132,7 +130,7 @@ void draw() {
           gameState = GAME_RUN;
         }
     }
-         break;
+    break;
     
     case GAME_RUN:
     // background
@@ -150,40 +148,47 @@ void draw() {
       // enemy 
       switch(enemyState){
         case Straight:
-        for(i = 0; i < 5; i++){
+        for(int i = 0; i < 5; i++){
           image(enemy, enemyX - i*enemySpacing,enemyY);
         }
-        enemyX += 3;
+        enemyX += 5;
         
         if (enemyX - 5*enemySpacing >= width) {
-          enemyX = 0;
+          enemyX = -70;
           enemyY = random(30,105);
           enemyState = Slope;
-        }
+          }
          break; 
       
         case Slope:
-       for(i = 0; i < 5 ; i++){
+         for(int i = 0; i < 5 ; i++){
          image(enemy, enemyX - i*enemySpacing,enemyY + i*enemySpacing);
           }
-          enemyX += 3;
+          enemyX += 5;
+       
+         if(enemyX - 5*enemySpacing >= width) {
+          enemyX = -70;
+          enemyY = random(30,105);
+          gameState = Diamond;
+          }
+       break;
+       
+       case Diamond:
+       for(int i=0;i<3;i++){
+            image(enemy,enemyX-i*enemySpacing,enemyY-i*enemySpacing);
+            image(enemy,enemyX-i*enemySpacing,enemyY+i*enemySpacing);
+            image(enemy,enemyX-(4-i)*enemySpacing,enemyY-i*enemySpacing);
+            image(enemy,enemyX-(4-i)*enemySpacing,enemyY+i*enemySpacing);
+           }
+        enemyX += 5;
        
        if(enemyX - 5*enemySpacing >= width) {
-        enemyX = 0;
+        enemyX = -70;
         enemyY = random(30,105);
         gameState = Straight;
+       }
+       break;  
       }
-       break;
-      }
-  
-      if (enemyY > fighterY){
-        enemyY -= enemyYSpeed; 
-        }
-      if (enemyY < fighterY){
-        enemyY += enemyYSpeed;
-        }  
-      
-       
       //boundary detection(enemy)
        if( enemyY > 420){
         enemyY = 420;}
@@ -200,12 +205,6 @@ void draw() {
        if (downPressed) {
           fighterY += fighterSpeed;
         }
-        if (enemyY > fighterY){
-        enemyY -= enemyYSpeed; 
-        }
-      if (enemyY < fighterY){
-        enemyY += enemyYSpeed;
-        }  
         if (leftPressed) {
           fighterX -= fighterSpeed;
         }

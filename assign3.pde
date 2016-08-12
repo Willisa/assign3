@@ -32,7 +32,7 @@ float treasureX, treasureY;
 float fighterX, fighterY;
 float fighterSpeed;
 float hpX;
-float enemySpacing = 65; 
+float enemySpacing; 
 
 int width, height;
 int x1, x2;
@@ -70,7 +70,7 @@ void setup () {
   fighterY = floor(random(60,420));
   fighterSpeed = 5;
   image( enemy, enemyX, enemyY);
-  enemyX = 0;
+  enemyX = -65;
   enemyY = floor(random(60,420));
   enemyXSpeed = 4;
   enemyYSpeed = 3;
@@ -152,10 +152,9 @@ void draw() {
           image(enemy, enemyX - i*enemySpacing,enemyY);
         }
         enemyX += 5;
-        
         if (enemyX - 5*enemySpacing >= width) {
           enemyX = -70;
-          enemyY = random(30,105);
+          enemyY = random(20,140);
           enemyState = Slope;
           }
          break; 
@@ -164,12 +163,11 @@ void draw() {
          for(int i = 0; i < 5 ; i++){
          image(enemy, enemyX - i*enemySpacing,enemyY + i*enemySpacing);
           }
-          enemyX += 5;
-       
+         enemyX += 5;
          if(enemyX - 5*enemySpacing >= width) {
           enemyX = -70;
-          enemyY = random(30,105);
-          gameState = Diamond;
+          enemyY = random(140,300);
+          enemyState = Diamond;
           }
        break;
        
@@ -180,12 +178,11 @@ void draw() {
             image(enemy,enemyX-(4-i)*enemySpacing,enemyY-i*enemySpacing);
             image(enemy,enemyX-(4-i)*enemySpacing,enemyY+i*enemySpacing);
            }
-        enemyX += 5;
-       
+       enemyX += 5;
        if(enemyX - 5*enemySpacing >= width) {
         enemyX = -70;
-        enemyY = random(30,105);
-        gameState = Straight;
+        enemyY = random(80,400);
+        enemyState = Straight;
        }
        break;  
       }

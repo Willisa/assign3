@@ -166,7 +166,7 @@ void draw() {
          enemyX += 5;
          if(enemyX - 5*enemySpacing >= width) {
           enemyX = -70;
-          enemyY = random(140,300);
+          enemyY = random(140,270);
           enemyState = Diamond;
           }
        break;
